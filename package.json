@@ -1,0 +1,38 @@
+{
+  "name": "@reuters-graphics/react-smart-text",
+  "version": "0.0.1",
+  "description": "Smart text with mustache replacement and markdown features.",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "author": "Jon McClure <jon.r.mcclure@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-react": "^7.10.4",
+    "@reuters-graphics/eslint-config": "^0.0.2",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "eslint": "^6.8.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^8.0.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.22.2",
+    "rollup-plugin-node-externals": "^2.2.0",
+    "rollup-plugin-size-snapshot": "^0.12.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.19",
+    "mustache": "^4.0.1",
+    "react-markdown": "^4.3.1",
+    "remark-bracketed-spans": "^3.0.0"
+  },
+  "scripts": {
+    "build": "rollup --config rollup.config.js",
+    "test": "mocha"
+  }
+}
