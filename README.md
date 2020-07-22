@@ -2,6 +2,7 @@
 
 # @reuters-graphics/react-smart-text
 
+[![npm version](https://badge.fury.io/js/%40reuters-graphics%2Freact-smart-text.svg)](https://badge.fury.io/js/%40reuters-graphics%2Freact-smart-text)
 
 ### Install
 
