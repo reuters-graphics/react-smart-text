@@ -4,6 +4,7 @@
   "description": "Smart text with mustache replacement and markdown features.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "repository": "https://github.com/reuters-graphics/react-smart-text",
   "author": "Jon McClure <jon.r.mcclure@gmail.com>",
   "license": "MIT",
   "private": false,
