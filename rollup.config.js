@@ -5,7 +5,10 @@ import resolve from '@rollup/plugin-node-resolve';
 
 const plugins = [
   resolve({ preferBuiltins: true, modulesOnly: true }),
-  babel({ presets: ['@babel/preset-react'] }),
+  babel({
+    presets: ['@babel/preset-react'],
+    babelHelpers: 'bundled',
+  }),
   externals({ deps: true }),
 ];
 

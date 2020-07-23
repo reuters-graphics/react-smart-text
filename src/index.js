@@ -4,7 +4,9 @@ import React from 'react';
 import RenderedString from './RenderedString';
 import last from 'lodash/last';
 import pickBy from 'lodash/pickBy';
+import { toJson } from 'really-relaxed-json';
 
+// Pluralize handlers
 const isPluralize = (key) => key.split('.pluralize:').length > 1;
 const getPluralizedParts = (key) => {
   const [context, pluralstring] = key.split('.pluralize:');
@@ -14,7 +16,25 @@ const getPluralizedParts = (key) => {
 const isPlural = (context) => Array.isArray(context) ?
   context.length > 1 : context > 1;
 
-const RenderedRichString = ({ source, context = {} }) => {
+// Props handlers
+const isProps = (key) => key.split('.props:').length > 1;
+const getPropsParts = (key) => {
+  const [componentKey, propsString] = key.split('.props:');
+  const propsParts = propsString.split('|').map(d => d.trim());
+  const props = {};
+  for (const propsPart of propsParts) {
+    const [key, script] = propsPart.split('=');
+    try {
+      const prop = JSON.parse(toJson(script));
+      props[key] = prop;
+    } catch (e) {
+      console.warn(`Unable to parse prop "${key}" in SmartText component. Skipping.`);
+    }
+  }
+  return [componentKey, props];
+};
+
+const SmartText = ({ source, context = {} }) => {
   const tokens = Mustache.parse(source);
   const componentTokens = [];
 
@@ -34,7 +54,7 @@ const RenderedRichString = ({ source, context = {} }) => {
       concatOrAppend(componentTokens, key);
     // Template tokens
     } else if (type === 'name') {
-      // Pluralize strings
+      // Pluralize
       if (isPluralize(key)) {
         const [refKey, plurals] = getPluralizedParts(key);
         const [singular, plural] = plurals;
@@ -48,7 +68,16 @@ const RenderedRichString = ({ source, context = {} }) => {
         continue;
       }
 
-      // Mustache templates
+      // Props
+      if (isProps(key)) {
+        const [componentKey, props] = getPropsParts(key);
+        const component = context[componentKey];
+        if (!component) continue;
+        componentTokens.push(React.cloneElement(component, props));
+        continue;
+      }
+
+      // Recreate mustache templates to pass through for later processing
       if (!context[key] || typeof context[key] === 'string') {
         concatOrAppend(componentTokens, `${Mustache.tags[0]} ${key} ${Mustache.tags[1]}`);
 
@@ -75,7 +104,7 @@ const RenderedRichString = ({ source, context = {} }) => {
   return (<>{Components}</>);
 };
 
-RenderedRichString.propTypes = {
+SmartText.propTypes = {
   source: PropTypes.string.isRequired,
   context: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
@@ -88,4 +117,4 @@ RenderedRichString.propTypes = {
   ])),
 };
 
-export default RenderedRichString;
+export default SmartText;

@@ -35,6 +35,7 @@
     "mustache": "^4.0.1",
     "prop-types": "^15.7.2",
     "react-markdown": "^4.3.1",
+    "really-relaxed-json": "^0.2.24",
     "remark-bracketed-spans": "^3.0.0"
   },
   "scripts": {

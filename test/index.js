@@ -50,7 +50,7 @@ describe('Testing ReactSmartText', function() {
 
     const element = e(ReactSmartText, {
       source: 'This _is_ {{ article }} test, {{ name }}',
-      context: { article: 'an', name: e(Name, { name: 'Jon', key: 'i' }) },
+      context: { article: 'an', name: e(Name, { name: 'Jon', key: 'key' }) },
     });
     const string = ReactDOMServer.renderToStaticMarkup(element);
     expect(string).to.be('This <em>is</em> an test, <span>Jon!</span>');
@@ -77,5 +77,30 @@ describe('Testing ReactSmartText', function() {
     });
     const string = ReactDOMServer.renderToStaticMarkup(element);
     expect(string).to.be('<span>Jon</span><span>&amp; Lisa</span> are typing');
+  });
+
+  it('Should pass props to a component', function() {
+    class Elder extends React.Component {
+      render() {
+        const { age, ageRange, qualifier } = this.props;
+        if (age > 30) {
+          return e('span', null, `${qualifier} ${ageRange[1]}`);
+        } else if (age > 20) {
+          return e('span', null, `${ageRange[1]}`);
+        }
+        return e('span', null, `${ageRange[0]}`);
+      }
+    }
+
+    const element = e(ReactSmartText, {
+      source: 'It’s {{ name }}’s birthday! He is {{ age }}, which is {{ elder.props:ageRange=[young, old]|qualifier=very }}.',
+      context: {
+        name: 'Jon',
+        age: 35,
+        elder: e(Elder, { age: 35, key: 'key' }),
+      },
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('It’s Jon’s birthday! He is 35, which is <span>very old</span>.');
   });
 });
