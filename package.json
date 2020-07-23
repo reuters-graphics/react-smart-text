@@ -8,6 +8,9 @@
   "author": "Jon McClure <jon.r.mcclure@gmail.com>",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist/*"
+  ],
   "peerDependencies": {
     "react": "^16.13.1"
   },
