@@ -37,6 +37,7 @@ describe('Testing ReactSmartText', function() {
       source: 'This [is]{.red} a test',
     });
     const string = ReactDOMServer.renderToStaticMarkup(element);
+    // extra span is from react, which rendereds naked text in a one
     expect(string).to.be('This <span><span class="red" >is</span></span> a test');
   });
 
@@ -55,12 +56,26 @@ describe('Testing ReactSmartText', function() {
     expect(string).to.be('This <em>is</em> an test, <span>Jon!</span>');
   });
 
-  it('Should pluralize based on context', function() {
+  it('Should pluralize based on context variable', function() {
     const element = e(ReactSmartText, {
       source: '{{ number }} {{ number.pluralize:person|people }} {{ number.pluralize:is|are }} typing',
       context: { number: 1 },
     });
     const string = ReactDOMServer.renderToStaticMarkup(element);
     expect(string).to.be('1 person is typing');
+  });
+
+  it('Should pluralize based on array of components', function() {
+    const element = e(ReactSmartText, {
+      source: '{{ people }} {{ people.pluralize:is|are }} typing',
+      context: {
+        people: [
+          e('span', null, 'Jon'),
+          e('span', null, '& Lisa'),
+        ],
+      },
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('<span>Jon</span><span>&amp; Lisa</span> are typing');
   });
 });
