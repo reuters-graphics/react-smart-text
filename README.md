@@ -46,7 +46,7 @@ export default () => (
 );
 ```
 
-Pass options to pluralize text based on other context variables (usually a numbers or an array of components).
+Pass options to pluralize text based on other context variables (usually a number or an array of components).
 
 ```javascript
 import SmartText from '@reuters-graphics/react-smart-text';
