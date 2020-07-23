@@ -24,6 +24,7 @@
     "eslint": "^6.8.0",
     "expect.js": "^0.3.1",
     "mocha": "^8.0.1",
+    "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rollup": "^2.22.2",
     "rollup-plugin-node-externals": "^2.2.0",
@@ -32,6 +33,7 @@
   "dependencies": {
     "lodash": "^4.17.19",
     "mustache": "^4.0.1",
+    "prop-types": "^15.7.2",
     "react-markdown": "^4.3.1",
     "remark-bracketed-spans": "^3.0.0"
   },

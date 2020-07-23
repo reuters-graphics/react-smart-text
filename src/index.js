@@ -1,4 +1,5 @@
 import Mustache from 'mustache';
+import PropTypes from 'prop-types';
 import React from 'react';
 import RenderedString from './RenderedString';
 import last from 'lodash/last';
@@ -72,6 +73,19 @@ const RenderedRichString = ({ source, context = {} }) => {
   });
 
   return (<>{Components}</>);
+};
+
+RenderedRichString.propTypes = {
+  source: PropTypes.string.isRequired,
+  context: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+    ])),
+  ])),
 };
 
 export default RenderedRichString;
