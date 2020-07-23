@@ -25,7 +25,7 @@ import SmartText from '@reuters-graphics/react-smart-text';
 
 const source = 'This _is_ [a]{.red} test.';
 
-export default () => (
+const MySmartText = () => (
   <SmartText source={source} />
 );
 ```
@@ -41,7 +41,7 @@ const context = {
   name: () => (<span>Jon!</span>),
 };
 
-export default () => (
+const MySmartText = () => (
   <SmartText source={source} context={context} />
 );
 ```
@@ -54,7 +54,7 @@ import SmartText from '@reuters-graphics/react-smart-text';
 const source = '{{ number }} {{ number.pluralize:person is|people are }} typing.';
 const context = { number: 2 };
 
-export default () => (
+const MySmartText = () => (
   <SmartText source={source} context={context} />
 );
 ```
