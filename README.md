@@ -35,10 +35,12 @@ Use mustache syntax and replace with text or React components.
 ```javascript
 import SmartText from '@reuters-graphics/react-smart-text';
 
+const MyName = (props) => <span>{props.name}</span>;
+
 const source = 'This is {{ article }} test, {{ name }}.';
 const context = {
   article: 'an',
-  name: () => (<span>Jon!</span>),
+  name: <MyName name='Jon' />,
 };
 
 const MySmartText = () => (
