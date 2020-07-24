@@ -32,10 +32,11 @@ SmartText component takes two props:
 ```javascript
 import SmartText from '@reuters-graphics/react-smart-text';
 
-const source = 'My name is {{ name }}';
+const source = 'Hi, my name is {{ name }}.';
 const context = { name: 'Jon' };
 
 <SmartText source={source} context={context}/>
+// Hi, my name is Jon.
 ```
 
 
@@ -44,7 +45,7 @@ const context = { name: 'Jon' };
 
 ##### Markdown
 
-You can use Markdown in your source, including [bracketed spans](https://github.com/sethvincent/remark-bracketed-spans).
+You can use [Markdown](https://guides.github.com/features/mastering-markdown/) in your source, including [bracketed spans](https://github.com/sethvincent/remark-bracketed-spans).
 
 ```javascript
 import SmartText from '@reuters-graphics/react-smart-text';
@@ -54,16 +55,17 @@ const source = 'This _is_ [a]{.red} test.';
 const MySmartText = () => (
   <SmartText source={source} />
 );
+// This <em>is</em> <span><span class="red" >a</span></span> test.
 ```
 
 ##### mustache
 
-You can use mustache templates to replace placeholders with values or React components.
+You can use [mustache templates](https://mustache.github.io/) to replace placeholders with values or React components.
 
 ```javascript
 const MyName = (props) => <span>{props.name}</span>;
 
-const source = 'Hi my name is {{ article }} test, {{ name }}.';
+const source = 'Hiya, {{ name }}. This is {{ article }} test.';
 const context = {
   article: 'an',
   name: <MyName name='Jon' key='key' />,
@@ -74,6 +76,7 @@ const context = {
 const MySmartText = () => (
   <SmartText source={source} context={context} />
 );
+// Hiya, <span>Jon</span>. This is an test.
 ```
 
 ##### Pluralization
@@ -89,6 +92,7 @@ const context = { number: 2 };
 const MySmartText = () => (
   <SmartText source={source} context={context} />
 );
+// 2 people are typing.
 ```
 
 ##### Custom props
@@ -114,11 +118,12 @@ const context = {
   name: 'Jon',
   age: 35,
   elder: <Elder age={35} key='key' />,
-},
+};
 
 const MySmartText = () => (
   <SmartText source={source} context={context} />
 );
+// It’s Jon’s birthday! He is 35, which is <span>very old</span>.
 
 // VERY useful for translation...
 const germanSource = 'Es ist {{ name }}s Geburtstag! Er ist {{ age }} Jahre alt, was {{ elder.props:ageRange=[jung, alt]|qualifier=sehr }} ist.';
@@ -126,11 +131,12 @@ const germanContext = {
   name: 'Jon',
   age: 35,
   elder: <Elder age={35} key='key' />,
-},
+};
 
 const MyGermanSmartText = () => (
   <SmartText source={germanSource} context={germanContext} />
 );
+// Es ist Jons Geburtstag! Er ist 35 Jahre alt, was <span>sehr alt</span> ist.
 ```
 
 ### Testing
