@@ -139,6 +139,63 @@ const MyGermanSmartText = () => (
 // Es ist Jons Geburtstag! Er ist 35 Jahre alt, was <span>sehr alt</span> ist.
 ```
 
+##### Wrapping text
+
+You can wrap text with paragraph tags...
+
+```javascript
+import SmartText from '@reuters-graphics/react-smart-text';
+
+const source = 'Wrap me in a paragraph.';
+
+const MySmartText = () => (
+  <SmartText source={source} wrap />
+);
+// <p>Wrap me in a paragraph.</p>
+```
+
+... or use a custom wrapper component.
+
+```javascript
+const source = 'Wrap me in a heading.';
+const Wrapper = (props) => <h1>{props.children}</h1>;
+
+const MySmartText = () => (
+  <SmartText source={source} wrapper={Wrapper} />
+);
+// <h1>Wrap me in a heading.</h1>
+
+```
+
+##### Multiline
+
+You can split text into multiple paragraphs...
+
+```javascript
+import SmartText from '@reuters-graphics/react-smart-text';
+
+const source = 'Line 1.\nLine 2.\nLine 3.';
+
+const MySmartText = () => (
+  <SmartText source={source} multiline />
+);
+// <p>Line 1.</p><p>Line 2.</p><p>Line 3.</p>
+```
+
+... or use a custom wrapper.
+
+```javascript
+import SmartText from '@reuters-graphics/react-smart-text';
+
+const source = 'Line 1.\nLine 2.\nLine 3.';
+const Wrapper = (props) => <li>{props.children}</li>;
+
+const MySmartText = () => (
+  <SmartText source={source} multiline wrapper={Wrapper} />
+);
+// <li>Line 1.</li><li>Line 2.</li><li>Line 3.</li>
+```
+
 ### Testing
 
 ```

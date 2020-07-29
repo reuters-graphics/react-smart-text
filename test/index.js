@@ -5,7 +5,7 @@ const expect = require('expect.js');
 
 const e = React.createElement;
 
-describe('Testing ReactSmartText', function() {
+describe('SmartText component', function() {
   it('Should render simple mustache templates', function() {
     const element = e(ReactSmartText, {
       source: 'This is {{ article }} test',
@@ -102,5 +102,68 @@ describe('Testing ReactSmartText', function() {
     });
     const string = ReactDOMServer.renderToStaticMarkup(element);
     expect(string).to.be('It’s Jon’s birthday! He is 35, which is <span>very old</span>.');
+  });
+
+  it('Should wrap with paragraphs', function() {
+    const Age = () => e('span', null, '35');
+
+    const element = e(ReactSmartText, {
+      source: 'It’s {{ name }}’s birthday! He is {{ age }}.',
+      context: {
+        name: 'Jon',
+        age: e(Age, { key: 'key' }),
+      },
+      wrap: true,
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('<p>It’s Jon’s birthday! He is <span>35</span>.</p>');
+  });
+
+  it('Should wrap with custom wrapper', function() {
+    const Div = (props) => e('div', null, props.children);
+    const Age = () => e('span', null, '35');
+
+    const element = e(ReactSmartText, {
+      source: 'It’s {{ name }}’s birthday! He is {{ age }}.',
+      context: {
+        name: 'Jon',
+        age: e(Age, { key: 'key' }),
+      },
+      wrapper: Div,
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('<div>It’s Jon’s birthday! He is <span>35</span>.</div>');
+  });
+
+  it('Should split multilines and wrap with paragraphs', function() {
+    const Age = () => e('span', null, '35');
+
+    const element = e(ReactSmartText, {
+      source: 'It’s {{ name }}’s birthday! \n He is {{ age }}.',
+      context: {
+        name: 'Jon',
+        age: e(Age, { key: 'key' }),
+      },
+      multiline: true,
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('<p>It’s Jon’s birthday!</p><p>He is <span>35</span>.</p>');
+  });
+
+  it('Should split multilines and wrap with custom wrapper', function() {
+    const Li = (props) => e('li', null, props.children);
+    const Age = () => e('span', null, '35');
+
+    const element = e(ReactSmartText, {
+      source: 'It’s {{ name }}’s birthday! \n   \n He is {{ age }}.',
+      context: {
+        name: 'Jon',
+        age: e(Age, { key: 'key' }),
+      },
+      multiline: true,
+      wrapper: Li,
+    });
+    const string = ReactDOMServer.renderToStaticMarkup(element);
+    expect(string).to.be('<li>It’s Jon’s birthday!</li><li>He is <span>35</span>.</li>');
   });
 });
